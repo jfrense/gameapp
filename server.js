@@ -6,7 +6,7 @@ var mongo = require("mongodb");
 var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
-var server = new Server('localhost', 27017, {auto_reconnect: true});
+var server = new Server(process.env.IP, 27017, {auto_reconnect: true});
 db = new Db('gamedb', server);
 var connection = db.open(function(err, db) {
 
@@ -52,5 +52,5 @@ else {
   res.end('HI\n');
 }
 
-}).listen(3000, '127.0.0.1');
-console.log('Server running at http://127.0.0.1:3000/');
+}).listen(process.env.PORT, process.env.IP);
+console.log('Server running at Cloud 9');
