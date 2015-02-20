@@ -3,6 +3,8 @@ var url = require("url");
 var path = require("path");
 var mongo = require("mongodb");
 
+
+//establishing mongodb database server
 var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
@@ -26,30 +28,42 @@ var connection = db.open(function(err, db) {
 
 });
 
- function findAll(req, res){
-  db.collection('games', function(err, collection){
-   collection.find().toArray(function(err,items){
-      var result = JSON.stringify(items);
-      res.write(result);
-      res.end('\n\nEnd Request\n');
+ function findData(req, res){
+   db.collection('games', function(err, collection){
+     var object = url.parse(req.url,true).query;
+     for(var key in object){
+       if(Number.isNaN(parseInt(object[key])))
+       console.log("Invalid value in key:value object. It must be a number");
+
+    else  object[key] = parseInt(object[key]);
+
+   }
+    collection.find(object).limit(10).toArray(function(err,items){
+       var result = JSON.stringify(items);
+       res.write(result);
+       res.end('\n\nEnd Request\n');
     });
 
 });
 
 };
 
+
+//var prefix = "api";
+
 http.createServer(function (req, res) {
+  var call = url.parse(req.url).pathname;
+    if(call == "/api/games" & req.method == "GET"){
+      res.writeHead(200, {'Content-Type' : 'text/plain'});
+      findData(req, res);
+      }
 
-  if(req.url == "/games" & req.method == "GET"){
-    res.writeHead(200, {'Content-Type' : 'text/plain'});
-    findAll(req, res);
-
-
-    //res.end('end request\n');
-  }
 else {
   res.writeHead(200, {'Content-Type' : 'text/plain'});
   res.end('HI\n');
+
+
+
 }
 
 }).listen(3000, '127.0.0.1');
