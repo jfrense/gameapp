@@ -3,6 +3,8 @@ var url = require("url");
 var path = require("path");
 var mongo = require("mongodb");
 
+
+//establishing mongodb database server
 var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
@@ -26,9 +28,20 @@ var connection = db.open(function(err, db) {
 
 });
 
- function findAll(req, res){
+
+// Must test in different browser than the generic cloud 9 browser or else it wont work.
+// cloud 9 seems to add a "&" add the end to every api call.
+ function findData(req, res){
   db.collection('games', function(err, collection){
-   collection.find().toArray(function(err,items){
+    var object = url.parse(req.url,true).query;
+     for(var key in object){
+       if(Number.isNaN(parseInt(object[key])))
+       console.log("Invalid value in key:value object. It must be a number");
+
+    else  object[key] = parseInt(object[key]);
+
+   }
+    collection.find(object).limit(10).toArray(function(err,items){
       var result = JSON.stringify(items);
       res.write(result);
       res.end('\n\nEnd Request\n');
@@ -38,18 +51,22 @@ var connection = db.open(function(err, db) {
 
 };
 
+
+//var prefix = "api";
+
 http.createServer(function (req, res) {
-
-  if(req.url == "/games" & req.method == "GET"){
+    
+    //var call = prefix += url.parse(req.url).pathname;
+var call = url.parse(req.url).pathname;
+  if(call == "/api/games" & req.method == "GET"){
     res.writeHead(200, {'Content-Type' : 'text/plain'});
-    findAll(req, res);
-
-
-    //res.end('end request\n');
+    findData(req, res);
+   
   }
 else {
   res.writeHead(200, {'Content-Type' : 'text/plain'});
   res.end('HI\n');
+   
 }
 
 }).listen(process.env.PORT, process.env.IP);

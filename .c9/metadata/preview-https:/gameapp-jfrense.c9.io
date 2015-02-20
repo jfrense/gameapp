@@ -1,1 +1,1 @@
-{"filter":false,"title":"[P] https://gameapp-jfrense.c9.io","undoManager":{"mark":0,"position":-1,"stack":[]},"preview":{"path":"https://gameapp-jfrense.c9.io/games","previewer":"preview.browser"},"timestamp":1424352151083,"hash":"67452301efcdab8998badcfe10325476c3d2e1f0"}
+{"filter":false,"title":"[P] https://gameapp-jfrense.c9.io","undoManager":{"mark":0,"position":-1,"stack":[]},"preview":{"path":"https://gameapp-jfrense.c9.io/api/games?maxplayers=3","previewer":"preview.browser"},"timestamp":1424371273170,"hash":"67452301efcdab8998badcfe10325476c3d2e1f0"}
