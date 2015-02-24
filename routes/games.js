@@ -36,8 +36,8 @@ exports.findData = function(req, res){
 
   }
    collection.find(object).limit(10).toArray(function(err,items){
-      var result = JSON.stringify(items);
-      res.send(result);
+    //  var result = JSON.stringify(items);
+      res.json(items);
    });
 
 });
