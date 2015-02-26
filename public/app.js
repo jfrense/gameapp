@@ -21,7 +21,7 @@ var apicall = [];
 function setupWatcher(model){
 
   $scope.$watch(model,function(){
-      
+
 
     if(!$scope[model]) return;
 
@@ -51,7 +51,7 @@ angular.forEach(['maxplayers','minplayers','playingtime'],setupWatcher);
 
 
     $scope.RandomNum = function(){
-    return Math.floor(Math.random()*($scope.games.length - 0))+0;
+    return Math.floor(Math.random()*($scope.games.length - 0)+0);
   }
 
 
