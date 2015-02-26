@@ -35,7 +35,7 @@ exports.findData = function(req, res){
    else  object[key] = parseInt(object[key]);
 
   }
-   collection.find(object).limit(10).toArray(function(err,items){
+   collection.find(object).toArray(function(err,items){
     //  var result = JSON.stringify(items);
       res.json(items);
    });
